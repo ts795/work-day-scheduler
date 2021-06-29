@@ -9,6 +9,9 @@ var startHour = 9;
 var endHour = 17;
 var currentTime = moment();
 
+// Saved events
+var savedEvents = {};
+
 for (var hour = startHour; hour <= endHour; hour++) {
     var timeForRow = moment().startOf('day').add(hour, 'hours');
     var rowEl = $("<div>");
@@ -17,6 +20,8 @@ for (var hour = startHour; hour <= endHour; hour++) {
     var timeEl = $("<span>");
     // Set the time and format like 9AM
     var timeText = timeForRow.format("hA");
+    // Save the date for the row in the time element
+    timeEl.attr('data-date', timeForRow.format("dddd, MMMM Do hA"));
     timeEl.text(timeText);
     timeEl.addClass('hour');
     rowEl.append(timeEl);
@@ -47,3 +52,14 @@ for (var hour = startHour; hour <= endHour; hour++) {
     // Add the row to the container
     containerEl.append(rowEl);
 }
+
+// Event handler for the save buttons
+containerEl.on('click', '.saveBtn', function (event) {
+    // Get the date and time from the row
+    var dateForEvent = $(event.target).siblings().eq(0).attr('data-date');
+    // Get the event for thr row
+    var eventForRow = $(event.target).siblings().eq(1).val();
+    savedEvents[dateForEvent] = eventForRow;
+    // Save the event to local storage
+    localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+});
