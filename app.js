@@ -12,6 +12,13 @@ var currentTime = moment();
 // Saved events
 var savedEvents = {};
 
+// Get save events from local storage
+var fromLocalStorage = localStorage.getItem("savedEvents");
+
+if (fromLocalStorage) {
+    savedEvents = JSON.parse(fromLocalStorage);
+}
+
 for (var hour = startHour; hour <= endHour; hour++) {
     var timeForRow = moment().startOf('day').add(hour, 'hours');
     var rowEl = $("<div>");
@@ -21,7 +28,8 @@ for (var hour = startHour; hour <= endHour; hour++) {
     // Set the time and format like 9AM
     var timeText = timeForRow.format("hA");
     // Save the date for the row in the time element
-    timeEl.attr('data-date', timeForRow.format("dddd, MMMM Do hA"));
+    var timeStamp = timeForRow.format("dddd, MMMM Do hA");
+    timeEl.attr('data-date', timeStamp);
     timeEl.text(timeText);
     timeEl.addClass('hour');
     rowEl.append(timeEl);
@@ -39,6 +47,11 @@ for (var hour = startHour; hour <= endHour; hour++) {
     } else {
         // row is in the present
         eventEl.addClass('present');
+    }
+
+    // Check if there is a saved entry for this time
+    if (savedEvents.hasOwnProperty(timeStamp)) {
+        eventEl.val(savedEvents[timeStamp]);
     }
 
     rowEl.append(eventEl);
