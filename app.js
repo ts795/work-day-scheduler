@@ -7,6 +7,7 @@ currentDayEl.text(moment().format("dddd, MMMM Do"));
 // Create a row for each hour in the work day from 9AM - 5PM
 var startHour = 9;
 var endHour = 17;
+var currentTime = moment();
 
 for (var hour = startHour; hour <= endHour; hour++) {
     var timeForRow = moment().startOf('day').add(hour, 'hours');
@@ -22,6 +23,19 @@ for (var hour = startHour; hour <= endHour; hour++) {
 
     // Add a text area for the event
     var eventEl = $("<textarea>");
+
+    // Set the color for the textarea based on the time
+    if (currentTime.isBefore(timeForRow)) {
+        // current time is before the start time for the row so it is in the future
+        eventEl.addClass('future');
+    } else if (moment().startOf('day').add(hour + 1, 'hours').isBefore(currentTime)) {
+        // end time for the row is before the current time so it is in the past
+        eventEl.addClass('past');
+    } else {
+        // row is in the present
+        eventEl.addClass('present');
+    }
+
     rowEl.append(eventEl);
 
     // Add a save button
