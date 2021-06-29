@@ -60,6 +60,7 @@ for (var hour = startHour; hour <= endHour; hour++) {
     var buttonEl = $("<button>");
     buttonEl.attr("type", "button");
     buttonEl.addClass('saveBtn');
+    buttonEl.text('Save');
     rowEl.append(buttonEl);
 
     // Add the row to the container
