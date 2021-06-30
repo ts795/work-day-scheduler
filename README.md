@@ -2,7 +2,7 @@
 This project is a schedule for a work day. The current day is shown and the user can enter events between the times of 9AM to 5PM. The schedule shows events in the past, present and future in different colors. The user can save the events and they will be shown the next time the user loads the page. This project was implemented using Javascript local storage, moment JS and jQuery.
 
 ## Site Picture
-![Site](work_day_scheduler.gif)
+![Site](./assets/images/work_day_scheduler.gif)
 
 ## Getting Started
 
